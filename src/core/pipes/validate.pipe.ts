@@ -8,12 +8,8 @@ export class ValidateInputPipe extends ValidationPipe {
     } catch (e) {
       if (e instanceof BadRequestException) {
         // @ts-ignore
-        throw new UnprocessableEntityException(this.handleError(e.message.message));
+        throw new UnprocessableEntityException(e.response.message);
       }
     }
-  }
-
-  private handleError(errors) {
-    return errors.map(error => error.constraints);
   }
 }
