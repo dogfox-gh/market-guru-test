@@ -1,8 +1,8 @@
 import { Injectable, Inject } from '@nestjs/common';
+import { Op } from 'sequelize';
 import { User } from './user.entity';
 import { UserDto } from './dto/user.dto';
 import { USER_REPOSITORY } from '../../core/constants';
-
 @Injectable()
 export class UsersService {
 
@@ -19,5 +19,22 @@ export class UsersService {
 
   async findOneById(id: number): Promise<User> {
     return await this.userRepository.findOne<User>({ where: { id } });
+  }
+
+  async getAll(
+    search = '',
+    page = 1,
+    perPage = 10,
+  ): Promise<{ rows: User[]; count: number }> {
+    return await this.userRepository.findAndCountAll({
+      where: {
+        [Op.or]: [
+          { name: { [Op.like]: `%${search}%` } },
+          { email: { [Op.like]: `%${search}%` } },
+        ],
+      },
+      offset: (page - 1) * perPage,
+      limit: perPage,
+    });
   }
 }
