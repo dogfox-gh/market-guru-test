@@ -11,7 +11,7 @@ export class AuthService {
   ) { }
 
   async validateUser(username: string, pass: string) {
-    // find if user exist with this email
+    // find if user exist with this username
     const user = await this.userService.findOneByEmailOrPhone(username);
     if (!user) {
       return null;

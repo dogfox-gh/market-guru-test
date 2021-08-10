@@ -9,11 +9,8 @@ export class UserDto {
   @IsNotEmpty()
   readonly name: string;
 
-  @IsNotEmpty()
-  @IsEmail()
   readonly email: string;
 
-  @IsNotEmpty()
   readonly phone: string;
 
   @IsNotEmpty()
