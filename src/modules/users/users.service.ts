@@ -37,8 +37,8 @@ export class UsersService {
     return await this.userRepository.findAndCountAll({
       where: {
         [Op.or]: [
-          { name: { [Op.like]: `%${search}%` } },
-          { email: { [Op.like]: `%${search}%` } },
+          { name: { [Op.iLike]: `%${search}%` } },
+          { email: { [Op.iLike]: `%${search}%` } },
         ],
       },
       offset: (page - 1) * perPage,
