@@ -13,6 +13,14 @@ export class UsersService {
     return await this.userRepository.create<User>(user);
   }
 
+  async findOneByEmailOrPhone(emailOrPhone: string): Promise<User> {
+    return await this.userRepository.findOne<User>({
+      where: {
+        [Op.or]: [{ email: emailOrPhone }, { phone: emailOrPhone }],
+      },
+    });
+  }
+
   async findOneByEmail(email: string): Promise<User> {
     return await this.userRepository.findOne<User>({ where: { email } });
   }
